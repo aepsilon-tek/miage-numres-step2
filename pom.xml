@@ -67,7 +67,7 @@
 
 
     <modules>
-       <!-- <module>api-quarkus-v1</module> -->
+        <module>api-quarkus-v1</module>
         <module>api-quarkus-v2</module>
     </modules>
 
