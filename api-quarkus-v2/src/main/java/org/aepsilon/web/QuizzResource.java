@@ -51,16 +51,15 @@ public class QuizzResource {
      * @return
      */
     @POST()
-    @Path("questions/{id}/evaluate")
+    @Path("proposals/evaluate")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public long evaluate(@RestPath Integer id,List<Proposal> rep){
-        Log.infof("In evaluate for questionId=%d",id);
+    public long evaluate(List<Proposal> rep){
+        Log.infof("In evaluate ");
         Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
         params.put("isCorrect", true);
         params.put("idProposals", rep.stream().map(p->p.id).collect(Collectors.toList()));
 
-        return Proposal.count("question.id = :id and correct= :isCorrect and id in :idProposals ",params);
+        return Proposal.count("correct= :isCorrect and id in :idProposals ",params);
     }
 }
