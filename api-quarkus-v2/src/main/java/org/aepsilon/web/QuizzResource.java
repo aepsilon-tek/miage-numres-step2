@@ -45,8 +45,7 @@ public class QuizzResource {
 
 
     /**
-     *  curl http://localhost:8080/quizz/questions/1/evaluate  -H 'accept: application/json'  -H 'content-type: application/json; charset=UTF-8' --data-raw '[{"id":1},{"id":2}]'
-     * @param id
+     *  curl http://localhost:8080/quizz/proposals/evaluate  -H 'accept: application/json'  -H 'content-type: application/json; charset=UTF-8' --data-raw '[{"id":1},{"id":2}]'
      * @param rep
      * @return
      */
