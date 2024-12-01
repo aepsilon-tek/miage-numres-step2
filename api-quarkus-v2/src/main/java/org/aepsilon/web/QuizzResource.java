@@ -19,7 +19,7 @@ public class QuizzResource {
 
 
     /**
-     * curl http://localhost:8080/quizz/questions
+     * curl -w "\nTime: %{time_total}s\nSize: %{size_download} bytes\n" http://localhost:8080/quizz/questions
      * @return
      */
     @GET()
@@ -32,7 +32,7 @@ public class QuizzResource {
 
 
     /**
-     * curl http://localhost:8080/quizz/questions/1/proposals
+     * curl -w "\nTime: %{time_total}s\nSize: %{size_download} bytes\n" http://localhost:8080/quizz/questions/1/proposals
      * @return
      */
     @GET()
@@ -45,7 +45,7 @@ public class QuizzResource {
 
 
     /**
-     *  curl http://localhost:8080/quizz/proposals/evaluate  -H 'accept: application/json'  -H 'content-type: application/json; charset=UTF-8' --data-raw '[{"id":1},{"id":2}]'
+     *  curl -w "\nTime: %{time_total}s\nSize: %{size_download} bytes\n" http://localhost:8080/quizz/proposals/evaluate  -H 'accept: application/json'  -H 'content-type: application/json; charset=UTF-8' --data-raw '[{"id":1},{"id":2}]'
      * @param rep
      * @return
      */

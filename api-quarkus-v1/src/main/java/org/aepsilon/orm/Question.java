@@ -12,6 +12,6 @@ public class Question extends PanacheEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CATEGORY_ID",nullable = false)
-    Category category;
+    public Category category;
 
 }

@@ -9,9 +9,9 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Proposal extends PanacheEntity {
     public String label;
-    private boolean correct;
+    public boolean correct;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "QUESTION_ID",nullable = false)
-    Question question;
+    public Question question;
 }

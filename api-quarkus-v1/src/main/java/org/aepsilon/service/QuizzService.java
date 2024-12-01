@@ -2,8 +2,10 @@ package org.aepsilon.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.aepsilon.dto.ProposalDto;
 import org.aepsilon.dto.QuestionDto;
 import org.aepsilon.dto.TranslationDto;
+import org.aepsilon.orm.Proposal;
 import org.aepsilon.orm.Question;
 import org.aepsilon.web.client.TranslateClient;
 import org.aepsilon.web.client.TranslateRequest;
@@ -17,35 +19,44 @@ import java.util.List;
 @ApplicationScoped
 public class QuizzService {
 
-    @ConfigProperty(name = "api-quizz.translations", defaultValue = "en")
-    private String translatedLanguage;
-
     @Inject
-    @RestClient
-    TranslateClient client;
+    TranslateService translateService;
     public List<QuestionDto> listAllQuestions(){
         List<Question> questions =  Question.listAll();
-        return translate(questions);
+        return translateService.translateQuestions(questions);
     }
 
-    private List<QuestionDto> translate(List<Question> questions) {
-        List<QuestionDto> result = new ArrayList<>();
-        for(Question currentQuestion:questions){
-            QuestionDto q = new QuestionDto(currentQuestion);
-            result.add(q);
-            String[] languages = translatedLanguage.split(",");
-            for(String currentLanguage:languages){
-                TranslateRequest r = new TranslateRequest();
-                r.setSource("fr");
-                r.setTarget(currentLanguage);
-                r.setQ(currentQuestion.label);
-                r.setAlternatives(0);
-                r.setFormat("text");
-                TranslateResponse rep = client.translate(r);
-                q.translations.add(new TranslationDto(rep,currentLanguage));
-            }//End For Each Question
-        }//End For Each
-
-        return result;
+    public QuestionDto loadQuestionById(Long questionId){
+        Question q = Question.findById(questionId);
+        return translateService.translateOneQuestion(q);
     }
+
+    public List<ProposalDto> listProposals(Long questionId){
+        List<Proposal> proposals =  Proposal.listAll();
+        List<Proposal> result = new ArrayList<>();
+        for(Proposal currentProposal:proposals){
+            if(currentProposal.id.equals(questionId)){
+                result.add(currentProposal);
+            }
+        }
+        return translateService.translateProposals(result);
+    }
+
+
+    public Long evaluateProposals(List<ProposalDto> proposalsInput){
+        List<Proposal> proposals =  Proposal.listAll();
+        Long count =0L;
+        for(Proposal currentProposal:proposals){
+            for(ProposalDto currentProposalDto:proposalsInput){
+                if(currentProposal.id.equals(currentProposalDto.id)){
+                    if(currentProposal.correct) {
+                        count++;
+                    }
+                }
+            }
+        }
+
+        return count;
+    }
+
 }

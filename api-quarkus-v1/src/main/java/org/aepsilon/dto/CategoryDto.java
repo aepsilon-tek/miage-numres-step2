@@ -1,20 +1,19 @@
 package org.aepsilon.dto;
 
+import org.aepsilon.orm.Category;
 import org.aepsilon.orm.Question;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionDto {
-    public Long id;
+public class CategoryDto {
     public List<TranslationDto> translations;
 
-    public CategoryDto catgory;
 
-    public QuestionDto(){}
+    public CategoryDto(){}
 
-    public QuestionDto(Question q,String lg){
+    public CategoryDto(Category c,String lg){
         translations =  new ArrayList<>();
-        translations.add(new TranslationDto(q,lg));
+        translations.add(new TranslationDto(c,lg));
     }
 }
